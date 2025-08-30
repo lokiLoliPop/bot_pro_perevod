@@ -1,0 +1,21 @@
+name: Keep Bot Alive
+
+on:
+  schedule:
+    # Пинг каждые 5 минут
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Возможность запустить вручную
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping bot
+        run: |
+          curl -f https://bot-pro-perevod.onrender.com/health || exit 1
+          echo "Bot pinged successfully at $(date)"
+      
+      - name: Ping main page too
+        run: |
+          curl -f https://bot-pro-perevod.onrender.com/ || exit 1
+          echo "Main page pinged successfully at $(date)"
